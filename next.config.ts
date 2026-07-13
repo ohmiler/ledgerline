@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isProduction ? "/ledgerline" : "",
-  assetPrefix: isProduction ? "/ledgerline/" : "",
+  basePath: isGitHubPages ? "/ledgerline" : "",
+  assetPrefix: isGitHubPages ? "/ledgerline/" : "",
   images: { unoptimized: true },
   turbopack: { root: process.cwd() },
 };
