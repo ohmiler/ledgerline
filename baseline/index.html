@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ledgerline API Documentation — Baseline</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <strong>Ledgerline Docs</strong>
+    <small>API v1 · Test mode</small>
+    <nav aria-label="Documentation">
+      <a href="#getting-started">Getting Started</a>
+      <a href="#payments">Payments</a>
+      <a href="#refunds">Refunds</a>
+      <a href="#webhooks">Webhooks</a>
+      <a href="#errors">Errors</a>
+      <a href="#reference">API Reference</a>
+    </nav>
+  </aside>
+  <main>
+    <p class="eyebrow">API DOCUMENTATION</p>
+    <h1>Build payments with Ledgerline</h1>
+    <p class="lead">A fictional REST API for creating payments, issuing refunds, and receiving webhook events. Illustrative only—not production payment guidance.</p>
+
+    <section id="getting-started" class="card">
+      <h2>Getting Started</h2>
+      <p>Use the test environment and send your API key as a bearer token.</p>
+      <pre><code>curl https://api.ledgerline.test/v1/payments \
+  -H "Authorization: Bearer ll_test_example" \
+  -H "Content-Type: application/json" \
+  -d '{"amount":2500,"currency":"thb","capture_method":"manual"}'</code></pre>
+    </section>
+
+    <section id="payments" class="card">
+      <h2>Payments</h2>
+      <h3>POST /v1/payments</h3>
+      <p>Create a payment in test mode. The example returns <code>pay_01J9AZ7J6Y3K2E8M4T</code> with status <code>requires_capture</code>.</p>
+      <table>
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>amount</td><td>integer</td><td>Yes</td><td>Minor currency units.</td></tr>
+          <tr><td>currency</td><td>string</td><td>Yes</td><td>Lowercase currency code.</td></tr>
+          <tr><td>capture_method</td><td>string</td><td>No</td><td>automatic or manual.</td></tr>
+        </tbody>
+      </table>
+      <pre><code>{"id":"pay_01J9AZ7J6Y3K2E8M4T","amount":2500,"currency":"thb","status":"requires_capture"}</code></pre>
+    </section>
+
+    <section id="refunds" class="card"><h2>Refunds</h2><p>Create a refund for a captured payment with <code>POST /v1/refunds</code>, then inspect it with <code>GET /v1/refunds/:id</code>.</p></section>
+    <section id="webhooks" class="card"><h2>Webhooks</h2><p>Verify the illustrative <code>Ledgerline-Signature</code> header before processing <code>payment.captured</code> or <code>refund.created</code>. Failed deliveries retry in test mode.</p></section>
+    <section id="errors" class="card"><h2>Errors</h2><p>Errors include a stable <code>code</code>, human-readable <code>message</code>, and optional <code>param</code>. A missing amount returns HTTP 400 with <code>parameter_missing</code>.</p></section>
+    <section id="reference" class="card"><h2>API Reference</h2><p>Base URL: <code>https://api.ledgerline.test/v1</code>. Retrieve, capture, or cancel a payment using its payment ID.</p></section>
+  </main>
+</body>
+</html>
